@@ -1,13 +1,13 @@
 {
   "name": "prose_string",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A string Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose",
   "license": "MIT",
   "main": "index.js",
   "keywords": [
+    "string",
     "core",
     "easy",
-    "string",
     "lodash",
     "pretty",
     "prose",

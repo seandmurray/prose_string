@@ -1,10 +1,9 @@
 # Prose/String
 
-Make writing node easier, prettier and less error prone. Writes and reads more like prose
+Copyright (c) 2019 Seán D. Murray
+SEE MIT LICENSE FILE
 
-A utility to help manipulate strings.
-
-See also prose_isit.
+A string Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose
 
 ## Usage
 
