@@ -2,107 +2,77 @@
 // Copyright (c) 2019 Seán D. Murray
 // SEE MIT LICENSE FILE
 const isit = require('prose_isit');
+const number_util = require('prose_number');
+const object_util = require('prose_object');
 
-exports.BLANK_ARRAY = '[]';
-exports.BLANK_JSON = '{}';
-exports.BLANK_STRING = '';
+function _init (xSize, ySize, value) {
+  const result = [];
+  for (let x = 0; x < xSize; x++) {
+    const inner = [];
+    for (let y = 0; y < ySize; y++) {
+      inner.push(value);
+    }
+    result.push(inner);
+  }
+  return result;
+}
 
-exports.SEPERATOR_FOR_COLLECTION = ',';
-exports.SEPERATOR_FOR_NAME = '-';
-exports.SEPERATOR_FOR_PATH = '/';
-exports.SEPERATOR_FOR_STRINGS = ' ';
-exports.UNCONVERTED_OBJECT = '[object Object]';
+function validCoordinates(x, y, xSize, ySize) {
+	if (number_util.notBetween(x, -1, xSize)) throw new Error('The X coordinate: "' + x + '" is not valid.');
+	if (number_util.notBetween(y, -1, ySize)) throw new Error('The Y coordinate: "' + y + '" is not valid.');
+}
 
-const TYPEOF_FUNCTION = typeof (() => {});
+function validSizes(xSize, ySize) {
+	if (number_util.zeroNegative(xSize)) throw new Error('The X size: "' + xSize + '" is not a valid non-zero-positive number?');
+	if (number_util.zeroNegative(ySize)) throw new Error('The Y size: "' + ySize + '" is not a valid non-zero-positive number?');
+}
 
-exports.isBlank = (str) => {
-	if (isit.nil(str)) {
-		return true;
-	}
-	str = exports.trim(str);
-	if (exports.isEmpty(str)) {
-		return true;
-	}
-	if ((/^[\s\b\f\n\r\t\v]*$/).test(str)) {
-		return true;
-	}
-	return false;
-};
+module.exports = class Matrix2d {
 
-exports.notBlank = (str) => {
-	return exports.isBlank(str) ? false : true;
-};
-
-exports.isEmpty = (str) => {
-	if (isit.nil(str)) {
-		return true;
-	}
-	if (isit.notString(str)) {
-		throw new Error('A string value is expected');
-	}
-	if (isit.nil(str) || str.length < 1) {
-		return true;
-	}
-	return false;
-};
-
-exports.notEmpty = (obj) => {
-	return exports.isEmpty(obj) ? false : true;
-};
-
-exports.toString = (obj, defaultValue) => {
-	if (isit.nil(obj)) {
-		return defaultValue;
+	constructor(xSize, ySize, defaultValue) {
+		validSizes(xSize, ySize);
+		this._matrix = _init(xSize, ySize, defaultValue);
 	}
 
-	if (isit.aFunction(obj)) {
-		return defaultValue;
+	xSize () {
+		return this._matrix.length;
 	}
 
-	if (isit.aString(obj)) {
-		return obj;
+	ySize () {
+		return (this._matrix[0]).length;
 	}
 
-	if (isit.aNumber(obj)) {
-		return '' + obj;
+	get(x, y) {
+		validCoordinates(x, y, this.xSize(), this.ySize());
+		return this._matrix[x][y];
 	}
 
-	if (isit.aBoolean(obj)) {
-		return obj.toString(obj);
+	set(x, y, value) {
+		validCoordinates(x, y, this.xSize(), this.ySize());
+		this._matrix[x][y] = value;
 	}
 
-	if (isit.anArray(obj)) {
-		return JSON.stringify(obj);
+	setAll(value) {
+		this._matrix = _init(this.xSize(), this.ySize(), value);
 	}
 
-	try {
-		if (typeof obj.toString !== TYPEOF_FUNCTION) {
-			const tmp = obj.toString();
-			if (isit.notNil(tmp) && (exports.UNCONVERTED_OBJECT === tmp)) {
-				return tmp;
-			}
+	copy() {
+		return object_util.copy(this._matrix);
+	}
+
+	equal(matrix) {
+		if (
+			(object_util.notHave(matrix, 'xSize'))
+			||
+			(object_util.notHave(matrix, 'ySize'))
+			||
+			(this.xSize() !== matrix.xSize())
+			||
+			(this.ySize() !== matrix.ySize())
+		) {
+			return false;
 		}
-		const tmp = JSON.stringify(obj);
-		if (isit.notNil(tmp)) {
-			return tmp;
-		}
-	}
-	catch (e) {
-		// Do nothing keep on trying
+		return object_util.equal(this._matrix, matrix.copy());
 	}
 
-	// If all else fails, return default.
-	return defaultValue;
-};
-
-exports.trim = (str) => {
-	if (isit.nil(str)) {
-		return str;
-	}
-	if (isit.notString(str)) {
-		throw new Error('A string value is expected');
-	}
-	str = str.replace(/^[\s\b\f\n\r\t\v]*/g, exports.BLANK_STRING);
-	str = str.replace(/[\s\b\f\n\r\t\v]*$/g, exports.BLANK_STRING);
-	return str;
-};
+}
