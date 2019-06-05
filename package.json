@@ -1,12 +1,11 @@
 {
-  "name": "prose_matrix2d",
+  "name": "prose_string",
   "version": "1.0.7",
-  "description": "A 2D matrix Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose",
+  "description": "A string Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose",
   "license": "MIT",
   "main": "index.js",
   "keywords": [
-    "matrix",
-    "2 dimensions",
+    "string",
     "core",
     "easy",
     "lodash",
@@ -24,12 +23,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/seandmurray/prose_matrix2d"
+    "url": "https://github.com/seandmurray/prose_string"
   },
   "dependencies": {
-    "prose_isit": "*",
-    "prose_number": "*",
-    "prose_object": "*"
+    "prose_isit": "*"
   },
   "devDependencies": {}
 }
