@@ -1,6 +1,7 @@
 /* jshint esversion: 6 */
 // Copyright (c) 2019 Seán D. Murray
 // SEE MIT LICENSE FILE
+const array_util = require('prose_array');
 const isit = require('prose_isit');
 
 exports.BLANK_ARRAY = '[]';
@@ -48,6 +49,16 @@ exports.isEmpty = (str) => {
 
 exports.notEmpty = (obj) => {
 	return exports.isEmpty(obj) ? false : true;
+};
+
+exports.sentence = (...args) => {
+	if (array_util.isEmpty(args)) return exports.BLANK_STRING;
+	args = array_util.flatten(args);
+	let result = '';
+	for (const arg of args) {
+		result += exports.SEPERATOR_FOR_STRINGS + exports.toString(arg, exports.BLANK_STRING);
+	}
+	return result.trim();
 };
 
 exports.toString = (obj, defaultValue) => {
@@ -106,3 +117,4 @@ exports.trim = (str) => {
 	str = str.replace(/[\s\b\f\n\r\t\v]*$/g, exports.BLANK_STRING);
 	return str;
 };
+

@@ -18,6 +18,8 @@ string_util.isEmpty(somestring); // True if (or can be conveted to a string of) 
 
 string_util.notEmpty(somestring); // Inverse of isEmpty.
 
+string_util.sentence(..args); // where be any object or array of object that will be converted to string and put in a sentence seperated by a single space.
+
 string_util.toString(obj, defaultValue); // Tries to convert primatives or objects to a string, if conversion fails the default value is returned.
 
 string_util.trim(somestring); // Remove any and all space characters from begining and end of the given string, including any line or carriage returns. Note, uses above toString to convert input value.

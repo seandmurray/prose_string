@@ -50,6 +50,14 @@ assert.equal(string_util.notEmpty(spaceString), true, 'A string with only a spac
 assert.equal(string_util.notEmpty(string_util.BLANK_STRING), false, 'Empty string');
 console.log('notEmpty testing success');
 
+// sentence
+assert.equal(string_util.sentence(undefined), '', 'Undefined gets empty string');
+assert.equal(string_util.sentence(null), '', 'Null gets empty string');
+assert.equal(string_util.sentence('one'), 'one', 'Check string');
+assert.equal(string_util.sentence('one', 'two'), 'one two', 'Check string');
+assert.equal(string_util.sentence('one', [ 'two', 'three']), 'one two three', 'Check string');
+console.log('sentence testing success');
+
 // toString
 assert.equal(string_util.toString(undefined, defaultString), defaultString, 'Undefined cant be converted return default');
 assert.equal(string_util.toString(null, defaultString), defaultString, 'null cant be converted return default');

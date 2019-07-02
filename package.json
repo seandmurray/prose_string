@@ -1,6 +1,6 @@
 {
   "name": "prose_string",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "A string Utility. Make writing node easier, prettier and less error prone. Writes and reads more like prose",
   "license": "MIT",
   "main": "index.js",
@@ -26,6 +26,7 @@
     "url": "https://github.com/seandmurray/prose_string"
   },
   "dependencies": {
+    "prose_array": "*",
     "prose_isit": "*"
   },
   "devDependencies": {}
