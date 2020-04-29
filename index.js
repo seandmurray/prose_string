@@ -2,6 +2,7 @@
 // Copyright (c) 2019 Seán D. Murray
 // SEE MIT LICENSE FILE
 const array_util = require('prose_array');
+const is = require('prose_is');
 const isit = require('prose_isit');
 
 exports.BLANK_ARRAY = '[]';
@@ -17,7 +18,7 @@ exports.UNCONVERTED_OBJECT = '[object Object]';
 const TYPEOF_FUNCTION = typeof (() => {});
 
 exports.isBlank = (str) => {
-	if (isit.nil(str)) {
+	if (is.nil(str)) {
 		return true;
 	}
 	str = exports.trim(str);
@@ -35,13 +36,13 @@ exports.notBlank = (str) => {
 };
 
 exports.isEmpty = (str) => {
-	if (isit.nil(str)) {
+	if (is.nil(str)) {
 		return true;
 	}
 	if (isit.notString(str)) {
 		throw new Error('A string value is expected');
 	}
-	if (isit.nil(str) || str.length < 1) {
+	if (is.nil(str) || str.length < 1) {
 		return true;
 	}
 	return false;
@@ -62,7 +63,7 @@ exports.sentence = (...args) => {
 };
 
 exports.toString = (obj, defaultValue) => {
-	if (isit.nil(obj)) {
+	if (is.nil(obj)) {
 		return defaultValue;
 	}
 
@@ -89,12 +90,12 @@ exports.toString = (obj, defaultValue) => {
 	try {
 		if (typeof obj.toString !== TYPEOF_FUNCTION) {
 			const tmp = obj.toString();
-			if (isit.notNil(tmp) && (exports.UNCONVERTED_OBJECT === tmp)) {
+			if (is.notNil(tmp) && (exports.UNCONVERTED_OBJECT === tmp)) {
 				return tmp;
 			}
 		}
 		const tmp = JSON.stringify(obj);
-		if (isit.notNil(tmp)) {
+		if (is.notNil(tmp)) {
 			return tmp;
 		}
 	}
@@ -107,7 +108,7 @@ exports.toString = (obj, defaultValue) => {
 };
 
 exports.trim = (str) => {
-	if (isit.nil(str)) {
+	if (is.nil(str)) {
 		return str;
 	}
 	if (isit.notString(str)) {
